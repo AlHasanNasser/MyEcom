@@ -11,4 +11,6 @@ export function setAuthToken(token) {
   else delete api.defaults.headers.common["Authorization"];
 }
 
+export const markOrderAsSeen = (orderId) => api.patch(`/orders/${orderId}/mark_as_seen/`);
+
 export default api;

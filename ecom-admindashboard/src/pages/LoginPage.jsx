@@ -22,7 +22,7 @@ export default function LoginPage() {
 
   return (
     <div className="container auth-form">
-      <h2>Admin Login</h2>
+      <h2>Admins & Suppliers Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username">Username</label>

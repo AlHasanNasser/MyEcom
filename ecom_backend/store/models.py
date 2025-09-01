@@ -37,6 +37,7 @@ class Order(models.Model):
     supplier = models.ForeignKey(User, related_name='supplier_orders', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    is_seen = models.BooleanField(default=False)
     # address and other fields can be added
 
     def total(self):

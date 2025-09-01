@@ -12,6 +12,7 @@ export default function Header() {
   const [suggestions, setSuggestions] = useState([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [hasUnseenOrders, setHasUnseenOrders] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
@@ -66,6 +67,19 @@ export default function Header() {
       clearTimeout(debounceTimer);
     };
   }, [query, fetchSuggestions]);
+
+  useEffect(() => {
+    if (user) {
+      api.get('/my-orders/')
+        .then(response => {
+          const unseen = response.data.some(order => !order.is_seen);
+          setHasUnseenOrders(unseen);
+        })
+        .catch(error => {
+          console.error('Error fetching orders for notification:', error);
+        });
+    }
+  }, [user]);
 
   const handleSuggestionClick = (suggestion) => {
     setQuery("");
@@ -132,6 +146,7 @@ export default function Header() {
             <div className="profile-dropdown" ref={dropdownRef}>
               <button onClick={() => setDropdownOpen(!dropdownOpen)} className="profile-btn">
                 <span>Profile</span>
+                {hasUnseenOrders && <span className="notification-dot"></span>}
                 <span className="arrow">▼</span>
               </button>
               {dropdownOpen && (
