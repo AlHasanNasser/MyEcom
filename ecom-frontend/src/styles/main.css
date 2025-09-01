@@ -32,7 +32,21 @@ textarea{width:100%; min-height:120px; padding:8px; border-radius:6px;}
   .product-grid{grid-template-columns: 1fr;}
   .header-inner{padding:12px;}
 }
+.card-image-container {
+  position: relative;
+}
 
+.out-of-stock-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.9em;
+}
 .category-filters {
   margin-bottom: 24px;
   display: flex;
@@ -198,4 +212,34 @@ textarea{width:100%; min-height:120px; padding:8px; border-radius:6px;}
 .dropdown-item.btn-link {
   width: 100%;
   text-align: left;
+}
+
+.status-pending {
+  color: #ffc107; /* Amber/Yellow */
+  font-weight: bold;
+}
+
+.status-shipped {
+  color: #17a2b8; /* Info Blue */
+  font-weight: bold;
+}
+
+.status-delivered {
+  color: #28a745; /* Success Green */
+  font-weight: bold;
+}
+
+.status-cancelled {
+  color: #dc3545; /* Danger Red */
+  font-weight: bold;
+}
+
+.notification-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  margin-left: 4px;
+  vertical-align: middle;
 }

@@ -67,9 +67,10 @@ class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
     total = serializers.SerializerMethodField()
     user = UserSerializer(read_only=True)
+
     class Meta:
         model = Order
-        fields = ["id","user","created_at","status","items","total"]
+        fields = ["id","user","created_at","status","is_seen","items","total"]
 
     def get_total(self, obj):
         return obj.total()

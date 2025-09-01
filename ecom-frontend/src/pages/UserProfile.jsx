@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import api from '../api/api';
+import api, { markOrderAsSeen } from '../api/api';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function UserProfile() {
@@ -14,6 +14,15 @@ export default function UserProfile() {
           console.log('Orders fetched:', response.data);
           setOrders(response.data);
           setLoading(false);
+
+          // Mark unseen orders as seen
+          response.data.forEach(order => {
+            if (!order.is_seen) {
+              markOrderAsSeen(order.id)
+                .then(() => console.log(`Order ${order.id} marked as seen`))
+                .catch(error => console.error(`Error marking order ${order.id} as seen:`, error));
+            }
+          });
         })
         .catch(error => {
           console.error('Error fetching orders:', error);
@@ -21,6 +30,21 @@ export default function UserProfile() {
         });
     }
   }, [user]);
+
+  const getStatusClassName = (status) => {
+    switch (status) {
+      case 'Pending':
+        return 'status-pending';
+      case 'Shipped':
+        return 'status-shipped';
+      case 'Delivered':
+        return 'status-delivered';
+      case 'Cancelled':
+        return 'status-cancelled';
+      default:
+        return '';
+    }
+  };
 
   if (loading) {
     return <div className="container"><p>Loading orders...</p></div>;
@@ -44,7 +68,7 @@ export default function UserProfile() {
                   <strong>Total:</strong> ${order.total}
                 </div>
                 <div>
-                  <strong>Status:</strong> {order.status}
+                  <strong>Status:</strong> <span className={getStatusClassName(order.status)}>{order.status}</span>
                 </div>
               </div>
               <div className="order-items">

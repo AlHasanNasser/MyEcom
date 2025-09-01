@@ -278,7 +278,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="container admin-dashboard">
-      <h2>Admin Dashboard</h2>
+      <h2>{user?.profile?.role} Dashboard</h2>
       <p>
         Note: Only staff users should access this in production — backend enforces permissions.
       </p>

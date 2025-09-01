@@ -122,6 +122,14 @@ class OrderViewSet(viewsets.ModelViewSet):
             return Response({'error': 'Invalid status'}, status=status.HTTP_400_BAD_REQUEST)
         
         order.status = status_data
+        order.is_seen = False # Mark as unseen when status changes
+        order.save()
+        return Response(OrderSerializer(order).data)
+
+    @action(detail=True, methods=['patch'])
+    def mark_as_seen(self, request, pk=None):
+        order = self.get_object()
+        order.is_seen = True
         order.save()
         return Response(OrderSerializer(order).data)
 
